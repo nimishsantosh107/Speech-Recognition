@@ -1,14 +1,14 @@
 function startRecording() {
-	//start the recording process 
-    rec.record()
+    rec.record();
+    recordButton.disabled = true;
     stopButton.disabled = false;
     console.log("Recording started");
 }
 
 
 function stopRecording() {
-    stopButton.disabled = true;
     recordButton.disabled = false;
+    stopButton.disabled = true;
     //tell the recorder to stop the recording 
     rec.stop(); //stop microphone access 
     gumStream.getAudioTracks()[0].stop();
@@ -22,18 +22,16 @@ function createDownloadLink(blob) {
     var au = document.createElement('audio');
     var li = document.createElement('li');
     var link = document.createElement('a');
-    //add controls to the <audio> element 
+
     au.controls = true;
     au.src = url;
-    //link the a element to the blob 
+
     link.href = url;
     link.download = new Date().toISOString() + '.wav';
     link.innerHTML = link.download;
-    //add the new audio and a elements to the li element 
 
+    //UPLOAD
     var filename = new Date().toISOString(); //ADD EXT IF NEEDED
-	//filename to send to server without extension 
-	//upload link 
 	var upload = document.createElement('a');
 	upload.href = "#";
 	upload.innerHTML = "Upload";
@@ -49,13 +47,14 @@ function createDownloadLink(blob) {
 	    xhr.open("POST", "/#", true);
 	    xhr.send(fd);
 	})
+    //UPLOAD
+
     li.appendChild(upload);
     li.appendChild(au);
     li.appendChild(link);
     //add the li element to the ordered list 
     recordingsList.appendChild(li);
 }
-
 
 URL = window.URL
 var gumStream;
@@ -64,8 +63,6 @@ var input;
 var AudioContext = window.AudioContext;
 var audioContext = new AudioContext;
 
-var recordButton = document.getElementById("recordButton");
-var stopButton = document.getElementById("stopButton");
 recordButton.addEventListener("click", startRecording);
 stopButton.addEventListener("click", stopRecording);
 
@@ -74,8 +71,9 @@ var constraints = {
     video: false
 } 
 
+//initially both disabled
 recordButton.disabled = true;
-stopButton.disabled = false;
+stopButton.disabled = true;
 
 navigator.mediaDevices.getUserMedia(constraints).then(function(stream) {
     console.log("getUserMedia() success, stream created, initializing Recorder.js ..."); 
