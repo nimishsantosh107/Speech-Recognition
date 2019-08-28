@@ -1,4 +1,4 @@
-const options = { probabilityThreshold: 0.85 };
+const options = { probabilityThreshold: 0.97 };
 const classifier = ml5.soundClassifier('SpeechCommands18w', options, modelReady);
 
 function modelReady() {
