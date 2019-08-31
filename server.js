@@ -11,8 +11,9 @@ const certificate = fs.readFileSync('./SSL_KEY/rtc.crt', 'utf8');
 const credentials = {key: privateKey, cert: certificate};
 
 var app = express();
-var httpsServer = https.createServer(credentials, app);
+var httpServer = http.createServer(app);
+//var httpsServer = https.createServer(credentials, app);
 
 app.use("/", express.static(path.join(__dirname,"routes/ml5js/")));
 
-httpsServer.listen(PORT, IP4, ()=>{console.log(`HTTPS SERVER UP ON PORT: ${PORT}`);});
+httpServer.listen(PORT, ()=>{console.log(`HTTPS SERVER UP ON PORT: ${PORT}`);});
