@@ -59,10 +59,14 @@ function returnCommand (string) {
 		for(var i =  0; i< list.length ; i++){
 			if( i > 1){
 				for(var k = i; k < list.length; k++){
-					if(!isNaN(list[i])){
+					if(!isNaN(list[k])){ //1.3.4 not handled, use parseInt
 						temp.push(parseFloat(list[k]));
 					}else {
-						return false;
+						///1.3.4 not handled
+						if(k === 2){ return false;}
+						else{
+							return temp;
+						}
 					}
 				}
 				return temp;
@@ -98,7 +102,7 @@ function gotSpeech (argument) {
 			console.log(returnCommand(str));
 			createPassage(str);
 			str = "";
-		}, 1200);
+		}, 1400);
 	}
 }
 
