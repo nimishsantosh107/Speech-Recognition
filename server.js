@@ -3,7 +3,7 @@ const path = require('path');
 const http = require('http');
 const https = require('https');
 const fs = require('fs');
-
+ 
 const PORT = process.env.PORT || 3000;
 const IP4 = "192.168.1.100";
 const privateKey  = fs.readFileSync('./SSL_KEY/rtc.key', 'utf8');
@@ -11,9 +11,10 @@ const certificate = fs.readFileSync('./SSL_KEY/rtc.crt', 'utf8');
 const credentials = {key: privateKey, cert: certificate};
 
 var app = express();
-var httpServer = http.createServer(app);
-//var httpsServer = https.createServer(credentials, app);
+//var httpServer = http.createServer(app);
+var httpsServer = https.createServer(credentials, app);
 
-app.use("/", express.static(path.join(__dirname,"routes/ml5js/")));
+app.use("/", express.static(path.join(__dirname,"routes/p5speech/")));
 
-httpServer.listen(PORT, ()=>{console.log(`HTTPS SERVER UP ON PORT: ${PORT}`);});
+httpsServer.listen(PORT, IP4, ()=>{console.log(`HTTPS SERVER UP ON PORT: ${PORT}`);});
+//PUBLIC https://210.18.173.0:3000/
